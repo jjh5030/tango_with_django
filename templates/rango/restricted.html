@@ -1,0 +1,14 @@
+{% extends 'rango/base.html' %}
+
+{% load static %}
+
+{% block title %}Restricted Page{% endblock %}
+
+{% block body_block %}
+
+	<h1>Rango Says... Enter at your own risk!</h1>
+	Hello World! <strong>{{ boldmessage }}</strong><br/><br/>
+	<a href="/rango/">Go Home</a><br/><br/>
+	<img src="{% static "rango_2.jpg" %}" alt="Picture of Rango" /> 
+
+{% endblock %}
