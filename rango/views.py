@@ -19,13 +19,21 @@ def encode_url(str):
 def decode_url(str):
 	return str.replace('_', ' ')
 
-def get_category_list():
-	cat_list = Category.objects.all()
+def get_category_list(max_results=0, starts_with=''):
+		cat_list = []
+		if starts_with:
+				cat_list = Category.objects.filter(name__istartswith=starts_with)
+		else:
+				cat_list = Category.objects.all()
 
-	for cat in cat_list:
-		cat.url = encode_url(cat.name)
+		if max_results > 0:
+				if len(cat_list) > max_results:
+						cat_list = cat_list[:max_results]
 
-	return cat_list
+		for cat in cat_list:
+				cat.url = encode_url(cat.name)
+
+		return cat_list
 
 def index(request):
 	context = RequestContext(request)
@@ -337,3 +345,14 @@ def auto_add_page(request):
 			context_dict['pages'] = pages
 
 	return render_to_response('rango/page_list.html', context_dict, context)
+
+def suggest_category(request):
+	context = RequestContext(request)
+	cat_list = []
+	starts_with = ''
+	if request.method == 'GET':
+		starts_with = request.GET['suggestion']
+
+	cat_list = get_category_list(8, starts_with)
+
+	return render_to_response('rango/category_list.html', {'cat_list': cat_list }, context)
