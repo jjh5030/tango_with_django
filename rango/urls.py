@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^bing_search/', views.bing_search, name='bing_search'),
     url(r'^profile/', views.profile, name='profile'),
     url(r'^goto/', views.track_url, name='track_url'),
+    url(r'^like_category/', views.like_category, name='like_category'),
+    url(r'^auto_add_page/', views.auto_add_page, name='auto_add_page'),
     )
